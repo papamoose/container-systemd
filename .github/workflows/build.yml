@@ -2,11 +2,14 @@ name: Create and publish a Docker image
 
 on:
   pull_request:
-  push:
-    #branches: ['release']
     branches:
-    - '**'
+    - "main"
+  push:
+    branches:
     - '!test*'
+    - "**"
+    tags:
+    - "v*.*.*"
 
 env:
   REGISTRY: ghcr.io
@@ -30,18 +33,36 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
+      - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-latest
+          # list of Docker images to use as base name for tags
+          images: |
+            ghcr.io/papamoose/docker-ubuntu-systemd
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
 
-      - name: Build and push Docker image for Ubuntu 22.04 (amd64)
+
+      - name: Login to GHCR
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: Dockerfile
-          platforms: linux/amd64
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-latest-amd64,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-@{ref}-amd64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
