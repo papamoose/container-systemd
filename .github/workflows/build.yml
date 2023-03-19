@@ -54,6 +54,11 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
+          platforms: linux/amd64
+          file: Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-latest-amd64
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-${{ github.ref }}-amd64
           labels: ${{ steps.meta.outputs.labels }}
