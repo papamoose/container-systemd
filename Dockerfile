@@ -7,12 +7,14 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        software-properties-common \
-       rsyslog systemd systemd-cron sudo \
+       rsyslog systemd systemd-cron sudo dbus \
     && apt-get clean \
     && rm -Rf /usr/share/doc && rm -Rf /usr/share/man \
     && rm -rf /var/lib/apt/lists/* \
     && touch -d "2 hours ago" /var/lib/apt/lists
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
+RUN systemctl enable dbus \
+  && systemctl enable systemd-logind
 
 RUN rm -f /lib/systemd/system/systemd*udev* \
   && rm -f /lib/systemd/system/getty.target
