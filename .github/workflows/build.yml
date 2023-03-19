@@ -43,7 +43,7 @@ jobs:
           file: Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-latest-amd64,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-${{ github.sha | truncate(8) }}-amd64
+          tags: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-latest-amd64","${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-${{ github.sha | truncate(8) }}-amd64"
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push Docker image for Ubuntu 22.04 (arm64)
@@ -53,5 +53,5 @@ jobs:
           file: Dockerfile
           platforms: linux/arm64
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-latest-arm64,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-${{ github.sha | truncate(8) }}-arm64
+          tags: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-latest-arm64","${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-${{ github.sha | truncate(8) }}-arm64"
           labels: ${{ steps.meta.outputs.labels }}
