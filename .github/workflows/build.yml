@@ -1,12 +1,4 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-# GitHub recommends pinning actions to a commit SHA.
-# To get a newer version, you will need to update the SHA.
-# You can also reference a tag or branch, but the action may change without warning.
-
+---
 name: Create and publish a Docker image
 
 on:
@@ -17,13 +9,12 @@ on:
     - '**'
     - '!test*'
 
-
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-and-push-image:
+  build-and-push-image-22.04:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -44,14 +35,24 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-latest
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image for Ubuntu 22.04 (amd64)
         uses: docker/build-push-action@v4
         with:
           context: .
           file: Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-latest-amd64,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-${{ github.ref }}-amd64
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Build and push Docker image for Ubuntu 22.04 (arm64)
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: Dockerfile
+          platforms: linux/arm64
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-latest-arm64,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-${{ github.ref }}-arm64
           labels: ${{ steps.meta.outputs.labels }}
