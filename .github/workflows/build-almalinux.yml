@@ -58,8 +58,9 @@ jobs:
           push: true
           #push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            #${{ steps.meta.outputs.tags }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:almalinux-9-amd64
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:almalinux-9-amd64-v{{major}}.{{minor}}
             {{ sha }}
           #labels: ${{ steps.meta.outputs.labels }}
+
+            #${{ steps.meta.outputs.tags }}
