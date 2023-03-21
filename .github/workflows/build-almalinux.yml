@@ -16,7 +16,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-and-push-image-2204:
+  build-and-push-image-almalinux:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -49,18 +49,6 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
             type=sha
-
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          platforms: linux/amd64
-          file: Dockerfile.ubuntu.2204
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ${{ steps.meta.outputs.tags }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:ubuntu-22.04-amd64-latest
-          labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push
         uses: docker/build-push-action@v4
