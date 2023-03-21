@@ -55,9 +55,21 @@ jobs:
         with:
           context: .
           platforms: linux/amd64
-          file: Dockerfile
+          file: Dockerfile.ubuntu.2204
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
             ${{ steps.meta.outputs.tags }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.04-amd64-latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:ubuntu-22.04-amd64-latest
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: linux/amd64
+          file: Dockerfile.almalinux.9
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:almalinux-9-amd64-latest
           labels: ${{ steps.meta.outputs.labels }}
