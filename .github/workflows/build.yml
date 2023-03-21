@@ -64,7 +64,7 @@ jobs:
             type=semver,pattern=${{ github.event.release.tag_name }}
           labels: |
             maintainer=papamoose
-            org.opencontainers.image.title=almalinux-9-amd64
+            org.opencontainers.image.title=almalinux-9
             org.opencontainers.image.description=Almalinux 9 container running systemd
             org.opencontainers.image.vendor=Papamoose Co
 
@@ -120,7 +120,7 @@ jobs:
             type=semver,pattern=${{ github.event.release.tag_name }}
           labels: |
             maintainer=papamoose
-            org.opencontainers.image.title=ubuntu-2204-amd64
+            org.opencontainers.image.title=ubuntu-2204
             org.opencontainers.image.description=Ubuntu 22.04 container running systemd
             org.opencontainers.image.vendor=Papamoose Co
 
