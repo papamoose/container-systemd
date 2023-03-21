@@ -16,7 +16,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-and-push-image-almalinux:
+  almalinux9:
     runs-on: ubuntu-latest
     permissions:
       contents: read

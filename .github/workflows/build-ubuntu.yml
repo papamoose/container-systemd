@@ -16,7 +16,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-and-push-image-2204:
+  ubuntu2204:
     runs-on: ubuntu-latest
     permissions:
       contents: read
