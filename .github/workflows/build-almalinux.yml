@@ -35,19 +35,24 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      #- name: Docker meta
-      #  id: meta
-      #  uses: docker/metadata-action@v4
-      #  with:
-      #    # list of Docker images to use as base name for tags
-      #    images: |
-      #      ghcr.io/papamoose/docker-ubuntu-systemd
-      #    # generate Docker tags based on the following events/attributes
-      #    tags: |
-      #      type=semver,pattern={{version}}
-      #      type=semver,pattern={{major}}.{{minor}}
-      #      type=semver,pattern={{major}}
-      #      type=sha
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            ghcr.io/papamoose/docker-ubuntu-systemd
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
+          labels: |
+            maintainer=papamoose
+            org.opencontainers.image.title=almalinux-9-amd64
+            org.opencontainers.image.description=Almalinux 9 container running systemd
+            org.opencontainers.image.vendor=Papamoose Co
 
       - name: Build and push
         uses: docker/build-push-action@v4
@@ -57,10 +62,5 @@ jobs:
           file: Dockerfile.almalinux.9
           push: true
           #push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:almalinux-9-amd64
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:almalinux-9-amd64-v{{major}}.{{minor}}
-            {{ sha }}
-          #labels: ${{ steps.meta.outputs.labels }}
-
-            #${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
