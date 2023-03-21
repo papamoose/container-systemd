@@ -10,6 +10,9 @@ on:
     - "**"
     tags:
     - "v*.*.*"
+  release:
+    tags:
+    - "v*.*.*"
 
 env:
   REGISTRY: ghcr.io
