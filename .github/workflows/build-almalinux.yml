@@ -55,7 +55,8 @@ jobs:
           context: .
           platforms: linux/amd64
           file: Dockerfile.almalinux.9
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
+          #push: ${{ github.event_name != 'pull_request' }}
           tags: |
             ${{ steps.meta.outputs.tags }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:almalinux-9-amd64-latest
