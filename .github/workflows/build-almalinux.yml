@@ -11,9 +11,7 @@ on:
     tags:
     - "v*.*.*"
   release:
-    tags:
-    - "v*.*.*"
-
+    types: [created]
 
 env:
   REGISTRY: ghcr.io
