@@ -61,6 +61,7 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
             type=sha
+            ${{ github.event.release.tag_name }}
           labels: |
             maintainer=papamoose
             org.opencontainers.image.title=almalinux-9-amd64
@@ -116,6 +117,7 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
             type=sha
+            ${{ github.event.release.tag_name }}
           labels: |
             maintainer=papamoose
             org.opencontainers.image.title=ubuntu-2204-amd64
