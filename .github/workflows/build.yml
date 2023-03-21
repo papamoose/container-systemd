@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v3
       # https://github.com/docker/setup-qemu-action
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v2
       # https://github.com/docker/setup-buildx-action
       - name: Set up Docker Buildx
         id: buildx
@@ -90,7 +90,7 @@ jobs:
         uses: actions/checkout@v3
       # https://github.com/docker/setup-qemu-action
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v2
       # https://github.com/docker/setup-buildx-action
       - name: Set up Docker Buildx
         id: buildx
@@ -118,8 +118,8 @@ jobs:
             type=sha
           labels: |
             maintainer=papamoose
-            org.opencontainers.image.title=almalinux-9-amd64
-            org.opencontainers.image.description=Almalinux 9 container running systemd
+            org.opencontainers.image.title=ubuntu-2204-amd64
+            org.opencontainers.image.description=Ubuntu 22.04 container running systemd
             org.opencontainers.image.vendor=Papamoose Co
 
       - name: Build and push
