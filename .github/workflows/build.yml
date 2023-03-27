@@ -67,7 +67,7 @@ jobs:
             type=semver,pattern={{major}}
             type=sha
             type=raw,${{ github.event.release.tag_name }}
-            {{- if github.event_name == 'release' and github.event.release | defined -}}
+            {{- if github.event_name == 'release' -}}
             type=latest
             {{- endif }}
           labels: |
@@ -126,7 +126,7 @@ jobs:
             type=semver,pattern={{major}}
             type=sha
             type=raw,${{ github.event.release.tag_name }}
-            {{- if github.event_name == 'release' and github.event.release | defined -}}
+            {{- if github.event_name == 'release' -}}
             type=latest
             {{- endif }}
           labels: |
