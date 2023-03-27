@@ -48,10 +48,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Debug
+      # Generate tags based on event type
+      - name: Generate tags
+        id: generate-tags
         run: |
-          echo "github.event_name: ${{ github.event_name }}"
-          echo "github.event: ${{ toJson(github.event) }}"
+          if [ "${{ github.event_name }}" == "release" ]; then
+            echo "::set-output name=tags::type=semver,pattern={{version}},type=semver,pattern={{major}}.{{minor}},type=semver,pattern={{major}},type=sha,type=raw,${{ github.event.release.tag_name }},type=latest"
+          else
+            echo "::set-output name=tags::type=semver,pattern={{version}},type=semver,pattern={{major}}.{{minor}},type=semver,pattern={{major}},type=sha"
+          fi
 
       - name: Docker meta
         id: meta
@@ -61,13 +66,7 @@ jobs:
           images: |
             ghcr.io/papamoose/container-systemd-almalinux-9
           # generate Docker tags based on the following events/attributes
-          tags: |
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=sha
-            type=raw,${{ github.event.release.tag_name }}
-            ${{ if github.event_name == 'release' }}type=latest${{ endif }}
+          tags: ${{ steps.generate-tags.outputs.tags }}
           labels: |
             maintainer=papamoose
             org.opencontainers.image.title=almalinux-9
@@ -110,6 +109,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Generate tags based on event type
+      - name: Generate tags
+        id: generate-tags
+        run: |
+          if [ "${{ github.event_name }}" == "release" ]; then
+            echo "::set-output name=tags::type=semver,pattern={{version}},type=semver,pattern={{major}}.{{minor}},type=semver,pattern={{major}},type=sha,type=raw,${{ github.event.release.tag_name }},type=latest"
+          else
+            echo "::set-output name=tags::type=semver,pattern={{version}},type=semver,pattern={{major}}.{{minor}},type=semver,pattern={{major}},type=sha"
+          fi
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
@@ -118,13 +127,7 @@ jobs:
           images: |
             ghcr.io/papamoose/container-systemd-ubuntu-2204
           # generate Docker tags based on the following events/attributes
-          tags: |
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=sha
-            type=raw,${{ github.event.release.tag_name }}
-            ${{ if github.event_name == 'release' }}type=latest${{ endif }}
+          tags: ${{ steps.generate-tags.outputs.tags }}
           labels: |
             maintainer=papamoose
             org.opencontainers.image.title=ubuntu-2204
