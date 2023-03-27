@@ -62,6 +62,9 @@ jobs:
             type=semver,pattern={{major}}
             type=sha
             type=raw,${{ github.event.release.tag_name }}
+            {%- if github.event_name == 'release' and github.event.release.tag_name -%}
+            type=latest
+            {%- endif -%}
           labels: |
             maintainer=papamoose
             org.opencontainers.image.title=almalinux-9
@@ -118,6 +121,9 @@ jobs:
             type=semver,pattern={{major}}
             type=sha
             type=raw,${{ github.event.release.tag_name }}
+            {%- if github.event_name == 'release' and github.event.release.tag_name -%}
+            type=latest
+            {%- endif -%}
           labels: |
             maintainer=papamoose
             org.opencontainers.image.title=ubuntu-2204
