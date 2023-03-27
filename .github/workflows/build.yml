@@ -48,6 +48,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Debug
+        run: |
+          echo "github.event_name: ${{ github.event_name }}"
+          echo "github.event: ${{ toJson(github.event) }}"
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
