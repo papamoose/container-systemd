@@ -53,7 +53,7 @@ jobs:
         id: generate-tags
         run: |
           if [ "${{ github.event_name }}" == "release" ]; then
-            echo "::set-output name=tags::type=semver,pattern={{version}},type=semver,pattern={{major}}.{{minor}},type=semver,pattern={{major}},type=sha,type=raw,${{ github.event.release.tag_name }},type=latest"
+            echo "::set-output name=tags::type=semver,pattern={{version}},type=semver,pattern={{major}}.{{minor}},type=semver,pattern={{major}},type=sha,type=raw,${{ github.event.release.tag_name }},type=raw,value=latest"
           else
             echo "::set-output name=tags::type=semver,pattern={{version}},type=semver,pattern={{major}}.{{minor}},type=semver,pattern={{major}},type=sha"
           fi
@@ -114,7 +114,7 @@ jobs:
         id: generate-tags
         run: |
           if [ "${{ github.event_name }}" == "release" ]; then
-            echo "::set-output name=tags::type=semver,pattern={{version}},type=semver,pattern={{major}}.{{minor}},type=semver,pattern={{major}},type=sha,type=raw,${{ github.event.release.tag_name }},type=latest"
+            echo "::set-output name=tags::type=semver,pattern={{version}},type=semver,pattern={{major}}.{{minor}},type=semver,pattern={{major}},type=sha,type=raw,${{ github.event.release.tag_name }},type=raw,value=latest"
           else
             echo "::set-output name=tags::type=semver,pattern={{version}},type=semver,pattern={{major}}.{{minor}},type=semver,pattern={{major}},type=sha"
           fi
