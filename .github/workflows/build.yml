@@ -62,7 +62,7 @@ jobs:
             type=semver,pattern={{major}}
             type=sha
             type=raw,${{ github.event.release.tag_name }}
-            {{- if github.event_name == 'release' and github.event.release and github.event.release.tag_name -}}
+            {{- if github.event_name == 'release' and github.event.release and exists(github.event.release.tag_name) -}}
             type=latest
             {{- endif }}
           labels: |
@@ -121,7 +121,7 @@ jobs:
             type=semver,pattern={{major}}
             type=sha
             type=raw,${{ github.event.release.tag_name }}
-            {{- if github.event_name == 'release' and github.event.release and github.event.release.tag_name -}}
+            {{- if github.event_name == 'release' and github.event.release and exists(github.event.release.tag_name) -}}
             type=latest
             {{- endif }}
           labels: |
