@@ -81,21 +81,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push image
-        id: build-push
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          platforms: linux/amd64,linux/arm64
-          file: ${{ matrix.dockerfile }}
-          tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_REPO_OWNER }}/${{ matrix.image_name }}:${{ steps.meta.outputs.tags }}
-          labels: $|
-            maintainer=papamoose
-            org.opencontainers.image.title=${{ matrix.labels.title }}
-            org.opencontainers.image.description=${{ matrix.labels.description }}
-            org.opencontainers.image.vendor=Papamoose Co
-
         # Use metadata action to generate tags dynamically
       - name: Generate Docker metadata
         id: meta
@@ -110,6 +95,21 @@ jobs:
             type=sha
             type=raw,${{ github.event.release.tag_name }}
             type=raw,value=latest,enable=${{ github.event_name == 'release' }}
+
+      - name: Build and push image
+        id: build-push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          file: ${{ matrix.dockerfile }}
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_REPO_OWNER }}/${{ matrix.image_name }}:${{ steps.meta.outputs.tags }}
+          labels: $|
+            maintainer=papamoose
+            org.opencontainers.image.title=${{ matrix.labels.title }}
+            org.opencontainers.image.description=${{ matrix.labels.description }}
+            org.opencontainers.image.vendor=Papamoose Co
 
       # Only push on non-pull-requests (applies to all variants)
       - name: Determine if should push
