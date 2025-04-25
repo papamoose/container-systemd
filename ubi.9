@@ -1,4 +1,4 @@
-FROM ubi/ubi9
+FROM redhat/ubi9
 
 RUN dnf install -y 'dnf-command(config-manager)'
 RUN dnf config-manager --set-enabled crb
