@@ -30,24 +30,18 @@ jobs:
       matrix:
         include:
           # Define all OS variants here in one place
+          - variant: almalinux8
+            dockerfile: almalinux.8
+            image_name: container-systemd-almalinux-8
+            labels:
+              title: almalinux-8
+              description: Almalinux 8 container running systemd
           - variant: almalinux9
             dockerfile: almalinux.9
             image_name: container-systemd-almalinux-9
             labels:
               title: almalinux-9
               description: Almalinux 9 container running systemd
-          - variant: ubi8
-            dockerfile: ubi.8
-            image_name: container-systemd-ubi8
-            labels:
-              title: ubi8
-              description: UBI 8 container running systemd
-          - variant: ubi9
-            dockerfile: ubi.9
-            image_name: container-systemd-ubi9
-            labels:
-              title: ubi9
-              description: UBI 9 container running systemd
           - variant: ubuntu2204
             dockerfile: ubuntu.2204
             image_name: container-systemd-ubuntu-2204
@@ -60,6 +54,18 @@ jobs:
             labels:
               title: ubuntu-2404
               description: Ubuntu 24.04 container running systemd
+          #- variant: ubi8
+          #  dockerfile: ubi.8
+          #  image_name: container-systemd-ubi8
+          #  labels:
+          #    title: ubi8
+          #    description: UBI 8 container running systemd
+          #- variant: ubi9
+          #  dockerfile: ubi.9
+          #  image_name: container-systemd-ubi9
+          #  labels:
+          #    title: ubi9
+          #    description: UBI 9 container running systemd
 
     steps:
       - name: Checkout code

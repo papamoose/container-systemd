@@ -1,12 +1,7 @@
-FROM redhat/ubi9
+FROM almalinux:8
 
 RUN dnf install -y 'dnf-command(config-manager)'
-
-# Alma/Rocky
-#RUN dnf config-manager --set-enabled crb
-# RHEL
-RUN dnf config-manager --set-enabled ubi-9-codeready-builder-rpms
-
+RUN dnf config-manager --set-enabled crb
 RUN dnf install -y \
   procps \
   rsyslog \
