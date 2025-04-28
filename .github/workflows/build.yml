@@ -54,18 +54,18 @@ jobs:
             labels:
               title: ubuntu-2404
               description: Ubuntu 24.04 container running systemd
-          #- variant: ubi8
-          #  dockerfile: ubi.8
-          #  image_name: container-systemd-ubi8
-          #  labels:
-          #    title: ubi8
-          #    description: UBI 8 container running systemd
-          #- variant: ubi9
-          #  dockerfile: ubi.9
-          #  image_name: container-systemd-ubi9
-          #  labels:
-          #    title: ubi9
-          #    description: UBI 9 container running systemd
+          - variant: centosstream8
+            dockerfile: centos.stream.8
+            image_name: container-systemd-centosstream8
+            labels:
+              title: centosstream8
+              description: CentOS Stream 8 container running systemd
+          - variant: centosstream9
+            dockerfile: centos.stream.9
+            image_name: container-systemd-centosstream9
+            labels:
+              title: centosstream9
+              description: CentOS Stream 9 container running systemd
 
     steps:
       - name: Checkout code
