@@ -54,12 +54,12 @@ jobs:
             labels:
               title: ubuntu-2404
               description: Ubuntu 24.04 container running systemd
-          - variant: centosstream8
-            dockerfile: centos.stream.8
-            image_name: container-systemd-centosstream8
+          - variant: centosstream10
+            dockerfile: centos.stream.10
+            image_name: container-systemd-centosstream10
             labels:
-              title: centosstream8
-              description: CentOS Stream 8 container running systemd
+              title: centosstream10
+              description: CentOS Stream 10 container running systemd
           - variant: centosstream9
             dockerfile: centos.stream.9
             image_name: container-systemd-centosstream9
