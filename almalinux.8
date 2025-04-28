@@ -1,7 +1,7 @@
 FROM almalinux:8
 
 RUN dnf install -y 'dnf-command(config-manager)'
-RUN dnf config-manager --set-enabled crb
+RUN dnf config-manager --set-enabled appstream powertools
 RUN dnf install -y \
   procps \
   rsyslog \
@@ -24,8 +24,8 @@ RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 RUN rm -f /lib/systemd/system/systemd*udev* \
   && rm -f /lib/systemd/system/getty.target
 
-RUN ln -s /lib/systemd/system/dbus.service \
-      /lib/systemd/system/multi-user.target.wants/dbus.service
+#RUN ln -s /lib/systemd/system/dbus.service \
+#      /lib/systemd/system/multi-user.target.wants/dbus.service
 
 #RUN ln -s /lib/systemd/system/systemd-logind.service \
 #      /lib/systemd/system/multi-user.target.wants/systemd-logind.service
